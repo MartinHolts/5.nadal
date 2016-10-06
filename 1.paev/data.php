@@ -21,5 +21,21 @@
 <p>
 	Tere tulemast <?=$_SESSION["userEmail"];?>!
 	<a href="?logout=1">logi välja</a>
+<br><br	
 
+		<form method="POST" >
+				<label>Age</label><br>
+			<input name="signupEmail" type="text">
+			
+			<br><br>
+				
+				<label>Color</label><br>
+			<input name="signupPassword" type="color">
+			
+			<br><br>
+			
+			
+			<input type="submit" value="Salvesta">
+			
+			</form>
 </p>

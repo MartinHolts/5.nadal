@@ -1,15 +1,15 @@
 <?php 
+	var_dump($_POST);
+	var_dump(isset($_POST["signupEmail"]));
 	
-	require("../../../config.php");
-	var_dump($GLOBALS);
-	require("./functions.php");
 	
+	require("functions.php");
 	
 	// kui on sisseloginud siis suunan data lehele
 	if (isset($_SESSION["userId"])) {
 		header("Location: data.php");
 	}
-	 
+	
 	//var_dump($_GET);
 	
 	//echo "<br>";
@@ -59,56 +59,63 @@
 			
 		}
 		
+		/* GENDER */
+		
+		if (!isset ($_POST["gender"])) {
+			
+			//error
+		}else {
+			// annad väärtuse
+		}
+		
 	}
 	
 	//vaikimisi väärtus
 	$gender = "";
-	$genderError = "";
 	
 	if (isset ($_POST["gender"])) {
-		
 		if (empty ($_POST["gender"])) {
-
 			$genderError = "* Väli on kohustuslik!";
-
 		} else {
-
 			$gender = $_POST["gender"];
-
 		}
-	}
+		
+	} 
+	
+	
+	
 	
 	if ( $signupEmailError == "*" AND
-		 $signupPasswordError == "*" AND
-		 isset ($_POST["signupEmail"]) AND
-		 isset ($_POST["signupPassword"])
-	)	{
+		 $signupPasswordError == "*" &&
+		 isset($_POST["signupEmail"]) && 
+		 isset($_POST["signupPassword"]) 
+	  ) {
 		
-		//vigu ei olnud, kõik on olemas
+		//vigu ei olnud, kõik on olemas	
 		echo "Salvestan...<br>";
 		echo "email ".$signupEmail."<br>";
-		echo "parool".$_POST["signupPassword"]."<br>";
+		echo "parool ".$_POST["signupPassword"]."<br>";
 		
 		$password = hash("sha512", $_POST["signupPassword"]);
 		
-		echo $password;
+		echo $password."<br>";
 		
 		signup($signupEmail, $password);
-
 		
 		
 	}
 	
 	$notice = "";
 	//kas kasutaja tahab sisse logida
-	if ( isset($_POST["loginEmail"]) &&
-		 isset($_POST["loginPassword"]) &&
-		 !empty($_POST["loginPassword"]) &&
-		 !empty($_POST["loginPassword"])
+	if ( isset($_POST["loginEmail"]) && 
+		 isset($_POST["loginPassword"]) && 
+		 !empty($_POST["loginEmail"]) &&
+		 !empty($_POST["loginPassword"]) 
 	) {
+		
 		$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
+		
 	}
-	
 
 ?>
 <!DOCTYPE html>
@@ -119,7 +126,7 @@
 	<body>
 
 		<h1>Logi sisse</h1>
-		<p style="color:red;"> <?=$notice;?></p>
+		<p style="color:red;"><?=$notice;?></p>
 		<form method="POST" >
 			
 			<label>E-post</label><br>
@@ -148,7 +155,7 @@
 			
 			<br><br>
 					
-			<?php if ($gender == "female") { ?> 
+			<?php if ($gender == "female") { ?>
 				<input type="radio" name="gender" value="female" checked> female<br>
 			<?php } else { ?>
 				<input type="radio" name="gender" value="female" > female<br>
@@ -160,17 +167,14 @@
 				<input type="radio" name="gender" value="male" > male<br>
 			<?php } ?>
 			
+			
 			<?php if ($gender == "other") { ?>
 				<input type="radio" name="gender" value="other" checked> other<br>
 			<?php } else { ?>
-				<input type="radio" name="gender" value="other" > other <br>
+				<input type="radio" name="gender" value="other" > other<br>
 			<?php } ?>
 			
-			<?php echo $genderError; ?><br>
-			
-			
 			<input type="submit" value="Loo kasutaja">
-		
 		
 		</form>
 
