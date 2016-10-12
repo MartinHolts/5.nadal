@@ -136,6 +136,24 @@
 		
 		return $results;
 		
+		function cleanInput($input) {
+			
+			// input = " romil ";
+			$input = trim($input);
+			// input = "romil";
+			
+			// võtab välja 
+			$input = stripslashes($input);
+			
+			// html asendab, nt "<" saab ""
+			$input = htmlspecialchars($input);
+			
+			return $input;
+			
+			
+			
+		}
+		
 	}
 	
 	
